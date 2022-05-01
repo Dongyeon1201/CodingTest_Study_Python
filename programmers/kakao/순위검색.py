@@ -1,16 +1,24 @@
 from collections import defaultdict
 from itertools import combinations
 
-
+# 정렬된 배열에서 타겟 값 이상 값(크거나 같은)이 존재하는 첫 위치 반환
 def lower_bound(nums, target):
 
     left, right = 0, len(nums)
 
-    while left < right:  # left와 right가 만나는 지점이 target값 이상이 처음 나오는 위치
+    # left와 right가 만나는 지점이 target값 이상이 처음 나오는 위치
+    while left < right:
+
+        # 중간 위치 찾기
         mid = left + (right - left) // 2
 
+        # 타켓 숫자가 중간 위치 값보다 클 때
         if nums[mid] < target:
+
+            # 다음 시작 위치는 중간 바로 다음부터
             left = mid + 1
+
+        # 그렇지 않을 경우 중간부터
         else:
             right = mid
 
