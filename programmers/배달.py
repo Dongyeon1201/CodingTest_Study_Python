@@ -1,26 +1,43 @@
-from collections import defaultdict, deque
-from email.policy import default
-from itertools import count
+def dijkstra(graph, start):
+
+    # 시작 노드로부터 최소 거리를 저장함
+    distances = {node: float("inf") for node in graph}
+
+    # 시작 노드는 값 0
+    distances[start] = 0
+
+    # 정점 갯수(출발노드는 이미 0 값이 설정)
+    for i in range(len(graph) - 1):
+
+        # 각 노드 확인
+        for current_node in graph:
+
+            # 해당 노드와 연결된 노드들 확인
+            for connect_node in graph[current_node]:
+
+                # (시작노드 -> 연결노드까지의 거리) > (시작노드 -> 현재노드까지의 거리 + 현재 노드 -> 연결노드까지의 거리)
+                if distances[connect_node] > distances[current_node] + graph[current_node][connect_node]:
+
+                    # 갱신
+                    distances[connect_node] = distances[current_node] + graph[current_node][connect_node]
+
+    return distances
 
 
 def solution(N, road, K):
 
-    road_dict = defaultdict(list)
+    graph = {i: {} for i in range(1, N + 1)}
 
-    for a, b, c in road:
-        road_dict[a].append((b, c, 0))
-        road_dict[b].append((a, c, 0))
+    road.sort(key=lambda x: -x[2])
 
-    queue = deque(road_dict[1])
-    visit = [False] * N+1
-    visit[1] = True
+    for start, end, time in road:
+        graph[start][end] = time
+        graph[end][start] = time
 
-    while queue:
-        x,  = queue.popleft()
+    return len([item for item in dijkstra(graph, 1).values() if item <= K])
 
-        if visit[x[0]] == False and 
 
-N = 5
-road = [[1, 2, 1], [2, 3, 3], [5, 2, 2], [1, 4, 2], [5, 3, 1], [5, 4, 2]]
-K = 3
+N = 6
+road = [[1, 2, 1], [1, 3, 2], [2, 3, 2], [3, 4, 3], [3, 5, 2], [3, 5, 3], [5, 6, 1]]
+K = 4
 print(solution(N, road, K))
