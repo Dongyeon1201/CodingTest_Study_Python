@@ -36,4 +36,5 @@ for test_case in range(1, T + 1):
     visit = [False] * N
 
     dfs(0, 0)
+
     print(f"#{test_case} {best}")
