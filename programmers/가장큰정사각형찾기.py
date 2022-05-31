@@ -1,3 +1,8 @@
+# https://programmers.co.kr/questions/31906
+# https://small-stap.tistory.com/40
+# 위 두 블로그를 보고 푼 문제입니다.
+
+
 def solution(board):
 
     # 값 저장
